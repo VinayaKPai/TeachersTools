@@ -9,44 +9,66 @@
    AppRegistry,
    Text,
    View,
-   Button
+   Button,
+   Image,
  } from 'react-native';
  import { StackNavigator } from 'react-navigation';
+ import AssgnTestsScreen from './AssgnTestsScreen';
+ import StGrpScreen from './StGrpScreen';
+ import QuesBankScreen from './QuesBankScreen';
+
+
 
  class HomeScreen extends React.Component {
    static navigationOptions = {
-     title: 'Welcome',
+     title: 'Welcome to your teaching aid',
    };
    render() {
      const { navigate } = this.props.navigation;
      return (
        <View>
-         <Text>Hello, Chat App!</Text>
-         <Button
-           onPress={() => navigate('Chat')}
-           title="Chat with Lucy"
-         />
+
+         <Image
+          source={ require('./assets/icons/logo.png')}
+          style={{width: 400, height: 200}}
+        />
+         <Text>My Student Groups</Text>
+         <Text>The entry for editing the classes and student groups</Text>
+          <Button
+            onPress={() => navigate('StGroups')}
+            title="My Student Groups"
+          />
+
+          <Text>My Question Bank</Text>
+
+           <Text>The entry for editing the question bank</Text>
+
+           <Button
+             onPress={() => navigate('QuesBank')}
+             title="My Question Bank"
+           />
+
+           <Text>Create Test and Assignmentss</Text>
+
+            <Text>The entry for creating tests and Assignments</Text>
+
+            <Button
+              onPress={() => navigate('AssgnTests')}
+              title="Create an Assignemnt"
+            />
        </View>
      );
    }
  }
 
- class ChatScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Chat with Aditya',
-  };
-  render() {
-    return (
-      <View>
-        <Text>Chat with Aditya</Text>
-      </View>
-    );
-  }
-}
+
+
 
  export const TeachersTools = StackNavigator({
    Home: { screen: HomeScreen },
-   Chat: { screen: ChatScreen },
+   StGroups: { screen: StGrpScreen },
+   QuesBank: {screen: QuesBankScreen},
+   AssgnTests: {screen: AssgnTestsScreen},
  });
 
  AppRegistry.registerComponent('TeachersTools', () => TeachersTools);
