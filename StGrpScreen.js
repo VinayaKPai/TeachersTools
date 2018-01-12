@@ -9,7 +9,7 @@ import {
   Header,
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
- import {styles} from './styles';
+import {styles} from './styles';
 
 export default class StGrpScreen extends React.Component {
  static navigationOptions = {
