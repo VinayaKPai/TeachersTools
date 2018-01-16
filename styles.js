@@ -13,13 +13,17 @@ export const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 2,
+    backgroundColor: 'steelblue',
+  },
+  sectionHeaderText: {
     fontSize: 14,
     fontWeight: 'bold',
-    backgroundColor: 'rgba(247,247,247,1.0)',
   },
   item: {
     padding: 10,
-    fontSize: 18,
-    height: 44,
   },
+  itemText: {
+    fontSize: 18,
+  },
+
 })

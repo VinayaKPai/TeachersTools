@@ -7,14 +7,57 @@ import {
   Image,
   TextInput,
   Picker,
+  Component
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import Accordion from 'react-native-collapsible/Accordion';
+import {styles} from './styles';
+
+const SECTIONS = [
+  {
+    title: 'Add a Question',
+    content: <View>
+    <TextInput
+      style={{height: 40}}
+      placeholder="Type question here!"
+    />
+    <TextInput
+      style={{height: 40}}
+      placeholder="Type answer here!"
+    />
+    <Button
+      onPress={() => navigate('')}
+      title='Add Question'/>
+    </View>
+  },
+  {
+    title: 'View Existing',
+    content: <Text>Lorem ipsum...</Text>
+  }
+];
 
 export default class QuesBankScreen extends React.Component {
   constructor(props) {
      super(props);
      this.state = {text: ''};
    }
+
+   _renderHeader(section) {
+     return (
+       <View style={styles.sectionHeader}>
+         <Text style={styles.sectionHeaderText}>{section.title}</Text>
+       </View>
+     );
+   }
+
+   _renderContent(section) {
+     return (
+       <View style={styles.item}>
+         {section.content}
+       </View>
+     );
+   }
+
  static navigationOptions = {
    title: 'Questions database',
  };
@@ -25,18 +68,15 @@ export default class QuesBankScreen extends React.Component {
      <View>
 
        <Text>Course Questions Main page</Text>
+       <Accordion
+         sections={SECTIONS}
+         renderHeader={this._renderHeader}
+         renderContent={this._renderContent}
+       />
 
-       <Button
-         onPress={() => navigate('')}
-         title="Add a Question"
-       />
-       <Button
-         onPress={() => navigate('')}
-         title="View Existing"
-       />
        <Picker
-         selectedValue={this.state.language}
-         onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
+         selectedValue={this.state.lesson}
+         onValueChange={(itemValue, itemIndex) => this.setState({lesson: itemValue})}>
          <Picker.Item label="Lesson 1" value="L1" />
          <Picker.Item label="Lesson 2" value="L2" />
          <Picker.Item label="Lesson 3" value="L3" />
@@ -53,16 +93,14 @@ export default class QuesBankScreen extends React.Component {
           <Text style={{padding: 10, fontSize: 42}}>
             {this.state.text.split(' ').map((word) => word && '🍕').join(' ')}
           </Text>
-          <Button
-            onPress={() => navigate('')}
-            title="Add Now"
-          />
+
         </View>
         <View style={{flex: 1, flexDirection: 'row'}}>
         <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
          <View style={{width: 50, height: 50, backgroundColor: 'skyblue'}} />
          <View style={{width: 50, height: 50, backgroundColor: 'steelblue'}} />
          </View>
+
      </View>
    );
  }

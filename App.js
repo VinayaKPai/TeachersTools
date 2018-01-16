@@ -16,6 +16,8 @@
  import AssgnTestsScreen from './AssgnTestsScreen';
  import StGrpScreen from './StGrpScreen';
  import QuesBankScreen from './QuesBankScreen';
+ import Test from './Test';
+ import EditStudentsScreen from './EditStudentsScreen';
 
 
 
@@ -56,6 +58,10 @@
               onPress={() => navigate('AssgnTests')}
               title="Create an Assignemnt"
             />
+            <Button
+              onPress={() => navigate('Test')}
+              title="Test"
+            />
        </View>
      );
    }
@@ -65,10 +71,13 @@
 
 
  export const TeachersTools = StackNavigator({
+   //LHS is SHort name for calling the class on the RHS
    Home: { screen: HomeScreen },
    StGroups: { screen: StGrpScreen },
    QuesBank: {screen: QuesBankScreen},
    AssgnTests: {screen: AssgnTestsScreen},
+   Test: {screen: Test},
+   EditStudents: {screen: EditStudentsScreen},
  });
 
  AppRegistry.registerComponent('TeachersTools', () => TeachersTools);
