@@ -1,54 +1,58 @@
-import React from 'react';
-import { AppRegistry,
-Text,
-View,
-Button,
-Image,
-TextInput,
-Picker,
-Component } from 'react-native';
-import Accordion from 'react-native-collapsible/Accordion';
-import {styles} from './styles';
+import React, { Component } from 'react';
+import { Text, View, Button, Modal, StyleSheet } from 'react-native';
 
+export default class MyComponent extends Component {
+  state = {
+    modalVisible: false,
+  };
 
-export default class Test extends React.Component {
-//removed 'const' here as it was giving error and the app loaded without
-//error on this line
-//However, clicking on the Test button gives error on render function
-   PARTS = [
-    {
-      title: 'First',
-      content: 'Lorem ipsum...'
-    },
-    {
-      title: 'Second',
-      content: 'Lorem ipsum...'
-    }
-  ];
-
-  _renderHeader(section) {
-    return (
-      <View style={styles.sectionHeader}>
-        <Text >{section.title}</Text>
-      </View>
-    );
+  openModal() {
+    this.setState({modalVisible:true});
   }
 
-  _renderContent(section) {
-    return (
-      <View style={styles.item}>
-        <Text>{section.content}</Text>
-      </View>
-    );
+  closeModal() {
+    this.setState({modalVisible:false});
   }
 
   render() {
     return (
-      <Accordion
-        parts={PARTS}
-        renderHeader={this._renderHeader}
-        renderContent={this._renderContent}
-      />
+        <View style={styles.container}>
+          <Modal
+              visible={this.state.modalVisible}
+              animationType={'slide'}
+              onRequestClose={() => this.closeModal()}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.innerContainer}>
+                <Text>This is content inside of modal component</Text>
+                <Button
+                    onPress={() => this.closeModal()}
+                    title="Close modal"
+                >
+                </Button>
+              </View>
+            </View>
+          </Modal>
+          <Button
+              onPress={() => this.openModal()}
+              title="Open modal"
+          />
+        </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+  },
+  innerContainer: {
+    alignItems: 'center',
+  },
+});
