@@ -2,15 +2,17 @@ import React from 'react';
 import {
   AppRegistry,
   Text,
+  TextInput,
   View,
   Button,
   Image,
   SectionList,
+  FlatList,
   Header,
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import {styles} from './styles';
-
+import Accordion from 'react-native-collapsible/Accordion';
 const stuDB = [
   {
     className: 'Std 1',
@@ -75,8 +77,61 @@ const stuDB = [
   },//end std2
 ];
 
+const SECTIONS = [
+  // {
+  //   title:'B',
+  //   content:
+  //   <View>
+  //     <Text>id: 'sid19', name: 'Keshav'</Text>
+  //     <Text>id: 'sid20', name: ''</Text>
+  //     <Text>id: 'sid21', name: ''</Text>
+  //     <Text>id: 'sid22', name: ''</Text>
+  //     <Text>id: 'sid23', name: ''</Text>
+  //     <Text>id: 'sid24', name: 'Kavya'</Text>
+  //     </View>
+  //   },
+    {
+    content:
+    (<SectionList
+        sections= {stuDB}
+        renderSectionHeader={
+          ({section, item}) => <Text style={styles.sectionHeader}>{section.className} - {section.students}</Text>
+        }
+
+        renderItem={({section, item}) =>
+          <Text>
+              <Text>{item.sectionName}</Text>
+              <Text>students={({section, item}) =>{section.students}}</Text>
+          </Text>
+        }
+
+        keyExtractor={(item, index) => index}
+     />),
+     title: '{section.className}',
+   }
+];
 
 export default class StGrpScreen extends React.Component {
+  constructor(props) {
+     super(props);
+     this.state = {text: ''};
+   }
+//renders accordion header
+   _renderHeader(section) {
+     return (
+       <View style={styles.sectionHeader}>
+         <Text style={styles.sectionHeaderText}>{section.title}</Text>
+       </View>
+     );
+   }
+//renders accordion content
+   _renderContent(section, item) {
+     return (
+       <View style={styles.item}>
+         {section.content}
+       </View>
+     );
+   }
  static navigationOptions = {
    title: 'My Student Groups',
  };
@@ -85,23 +140,34 @@ export default class StGrpScreen extends React.Component {
    const { navigate } = this.props.navigation;
 
    return (
+
      <View>
-       <Text>Select a Std</Text>
-       <Text>List of my classes and sections</Text>
+
+       <Text>View or Edit roll call</Text>
        <SectionList
-                 sections= {stuDB}
+           sections= {stuDB}
 
-                 renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.className}</Text>}
+           renderSectionHeader={
+             ({section}) => <Text style={styles.sectionHeader}>{section.className}</Text>
+           }
 
 
-                 renderItem={({section, item}) =>
-                 <Button
-                   onPress={() => navigate('EditStudents', {parameter1: item, parameter2: section.className})}
-                   title={'Edit student list for '+item.sectionName}
-                 />}
+           renderItem={
+             ({section, item}) =>                    <Button
+               onPress={() => navigate('EditStudents', {parameter2: item, parameter1: section.className})}
+               title={'Edit student list for '+item.sectionName}
+             />
+           }
 
-                 keyExtractor={(item, index) => index}
-               />
+           keyExtractor={(item, index) => index}
+        />
+
+        <Accordion
+          sections={SECTIONS}
+          renderHeader={this._renderHeader}
+          renderContent={this._renderContent}
+        />
+        <Text>End of Page </Text>
      </View>
    );
  }

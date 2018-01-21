@@ -29,7 +29,6 @@ export default class EditStudentsScreen extends React.Component {
   openModal(item) {
     this.setState({modalVisible:true});
     this.setState({activeItemId:item.id});
-    //this.setState({activeItem:item});
     this.setState({activeItemName:item.name});
   }
 
@@ -39,23 +38,32 @@ export default class EditStudentsScreen extends React.Component {
   }
 
   submitChanges(params) {
-    params.parameter1.students[3].name=this.state.text;
+    params.parameter2.students[3].name=this.state.text;
     this.setState({modalVisible:false});
     //this.setState({activeItemId:null});
   }
 
+  getIndex(value, arr, prop) {
+      for(var i = 0; i < arr.length; i++) {
+          if(arr[i][prop] === value) {
+              return i;
+          }
+      }
+      return -1; //to handle the case where the value doesn't exist
+    }
 
 
  render() {
    const { params } = this.props.navigation.state;
+
    return (
      <View>
      <Text>This is a standard Roll for a class or section</Text>
        <Text>We land here from the My Student Groups Screen by clicking on any of the Edit Student List Buttons</Text>
        <Text>{this.state.text}</Text>
-       <Text>Trying to display this dot props dot navigation dot state - {params.parameter2 + params.parameter1.sectionName}</Text>
+       <Text>{params.parameter1 +' - ' + params.parameter2.sectionName}</Text>
        <FlatList
-          data={params.parameter1.students}
+          data={params.parameter2.students}
           extraData = {this.state}
           renderItem={({item}) =>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between',}}>
@@ -80,7 +88,8 @@ export default class EditStudentsScreen extends React.Component {
          >
            <View style={styles.modalContainer}>
              <View style={styles.innerContainer}>
-               <Text>This is content inside of modal component - {this.state.activeItemId} - {this.state.activeItemName}</Text>
+               <Text>This is content inside of modal component</Text>
+               <Text>{params.parameter1 +' - ' + params.parameter2.sectionName} - {this.state.activeItemId} - {this.state.activeItemName}</Text>
                <TextInput
                  style={{width: 140}}
                  placeholder="Type here!"
